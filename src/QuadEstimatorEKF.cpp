@@ -188,7 +188,7 @@ VectorXf QuadEstimatorEKF::PredictState(VectorXf curState, float dt, V3F accel, 
   predictedState(2) = curState(2) + curState(5) * dt;
   predictedState(3) = curState(3) + accel_inertial.x * dt;
   predictedState(4) = curState(4) + accel_inertial.y * dt;
-  predictedState(5) = curState(5) + accel_inertial.z * dt;
+  predictedState(5) = curState(5) - CONST_GRAVITY * dt + accel_inertial.z * dt;
   predictedState(6) = curState(6);
 
   /////////////////////////////// END STUDENT CODE ////////////////////////////
@@ -217,12 +217,12 @@ MatrixXf QuadEstimatorEKF::GetRbgPrime(float roll, float pitch, float yaw)
 
   ////////////////////////////// BEGIN STUDENT CODE ///////////////////////////
 
+  float phi = roll;
   float theta = pitch;  
-  float phi = roll; 
   float psi = yaw;
   
   RbgPrime(0,0) = - cos(theta) * sin(psi);
-  RbgPrime(0,1) = - sin(phi)  * sin(theta) * sin(psi) - cos(theta) * cos(psi);
+  RbgPrime(0,1) = - sin(phi)  * sin(theta) * sin(psi) - cos(phi) * cos(psi);
   RbgPrime(0,2) = - cos(psi) * sin(theta) * sin(psi) + sin(phi) * cos(psi);
   
   RbgPrime(1,0) = cos(theta)* cos(psi);
@@ -316,12 +316,12 @@ void QuadEstimatorEKF::UpdateFromGPS(V3F pos, V3F vel)
   zFromX(4) = ekfState(4);
   zFromX(5) = ekfState(5);
 
-
   hPrime(0, 0) = 1;
   hPrime(1, 1) = 1;
   hPrime(2, 2) = 1;
   hPrime(3, 3) = 1;
   hPrime(4, 4) = 1;
+  hPrime(5, 5) = 1;
 
   /////////////////////////////// END STUDENT CODE ////////////////////////////
 

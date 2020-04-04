@@ -69,3 +69,10 @@ PASS: ABS(Quad.Est.E.Yaw-0.000000) was less than Quad.Est.S.Yaw for 77% of the t
 ## Step 5: Closed Loop + GPS Update
 
 
+<p align="center">
+<img src="./scenario11.gif" width=400>
+</p>
+
+```
+PASS: ABS(Quad.Est.E.Pos) was less than 1.000000 for at least 20.000000 seconds
+```
